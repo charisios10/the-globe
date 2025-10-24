@@ -1,4 +1,4 @@
-# the-globe
+# The Globe
 
 A minimal, content-first blog about technology, coding, and related topics.
 
