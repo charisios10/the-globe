@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Contact — The Globe</title>
+    <style>
+        :root {
+            --bg: #f6f7fb;
+            --card: #ffffff;
+            --accent: #2563eb;
+            --muted: #6b7280;
+            --success: #16a34a;
+            --radius: 10px;
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            background:
+                radial-gradient(circle at 10% 10%, rgba(37, 99, 235, 0.06), transparent 10%),
+                linear-gradient(180deg, var(--bg), #ffffff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+            color: #0f172a;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 760px;
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: 0 6px 30px rgba(15, 23, 42, 0.08);
+            padding: 28px;
+        }
+
+        h1 {
+            margin: 0 0 6px;
+            font-size: 1.25rem;
+            letter-spacing: -0.2px;
+        }
+
+        p.lead {
+            margin: 0 0 20px;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        form {
+            display: grid;
+            gap: 12px;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+
+        .full {
+            grid-column: 1/-1
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #e6e9ef;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            background: #fff;
+            transition: box-shadow .15s, border-color .15s;
+            box-sizing: border-box;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 6px 18px rgba(37, 99, 235, 0.08);
+        }
+
+        textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .hint {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-top: 6px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-top: 6px;
+            grid-column: 1/-1;
+        }
+
+        button {
+            background: var(--accent);
+            color: #fff;
+            border: 0;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        button[aria-busy="true"] {
+            opacity: 0.8;
+            cursor: wait;
+        }
+
+        .secondary {
+            background: transparent;
+            border: 1px solid #e6e9ef;
+            color: var(--muted);
+            padding: 9px 12px;
+        }
+
+        .status {
+            margin-left: auto;
+            font-size: 0.95rem;
+        }
+
+        .status .ok {
+            color: var(--success)
+        }
+
+        .status .err {
+            color: #dc2626
+        }
+
+        @media (max-width:680px) {
+            form {
+                grid-template-columns: 1fr
+            }
+
+            .row {
+                flex-direction: column
+            }
+
+            .status {
+                margin-left: 0
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="card" role="main">
+        <header>
+            <h1>Contact us</h1>
+            <p class="lead">Have a question or feedback? Send us a message and we'll get back to you within 1–2 business
+                days.</p>
+        </header>
+
+        <form id="contactForm" novalidate>
+            <div>
+                <label for="name">Full name</label>
+                <input id="name" name="name" type="text" required autocomplete="name" placeholder="Jane Doe" />
+            </div>
+
+            <div>
+                <label for="email">Email address</label>
+                <input id="email" name="email" type="email" required autocomplete="email"
+                    placeholder="you@example.com" />
+            </div>
+
+            <div class="full">
+                <label for="subject">Subject</label>
+                <input id="subject" name="subject" type="text" placeholder="What is this about?" />
+            </div>
+
+            <div>
+                <label for="phone">Phone (optional)</label>
+                <input id="phone" name="phone" type="tel" inputmode="tel" placeholder="+1 (555) 555-5555" />
+            </div>
+
+            <div class="full">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" required placeholder="Write your message here…"></textarea>
+                <div class="hint">Please include any relevant details (order number, link, or screenshots).</div>
+            </div>
+
+            <!-- Honeypot to reduce spam bots -->
+            <input type="text" name="website" id="website"
+                style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;" tabindex="-1"
+                autocomplete="off" aria-hidden="true">
+
+            <div class="actions">
+                <button type="submit" id="submitBtn">Send message</button>
+                <button type="reset" class="secondary">Reset</button>
+
+                <div class="status" aria-live="polite" id="formStatus"></div>
+            </div>
+        </form>
+    </main>
+
+    <script>
+        // Simple client-side submission demo.
+        const form = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const status = document.getElementById('formStatus');
+
+        function setStatus(text, type) {
+            status.innerHTML = text ? '<span class="' + (type === 'ok' ? 'ok' : 'err') + '">' + text + '</span>' : '';
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            setStatus('', '');
+            // Simple browser validation
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Honeypot check
+            if (form.website && form.website.value) {
+                // silently ignore spam
+                setStatus('Submission failed.', 'err');
+                return;
+            }
+
+            // Collect form data
+            const data = {
+                name: form.name.value.trim(),
+                email: form.email.value.trim(),
+                subject: form.subject.value.trim(),
+                phone: form.phone.value.trim(),
+                message: form.message.value.trim()
+            };
+
+            // Show busy state
+            submitBtn.setAttribute('aria-busy', 'true');
+            submitBtn.disabled = true;
+            setStatus('Sending…');
+
+            try {
+                // Replace the block below with a real POST to your server/API.
+                // Example (uncomment and set your endpoint):
+                /*
+                const resp = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: {'Content-Type':'application/json'},
+                    body: JSON.stringify(data)
+                });
+                if (!resp.ok) throw new Error('Network error');
+                */
+
+                // Demo: simulate network delay
+                await new Promise(r => setTimeout(r, 900));
+
+                // Log to console so you can see payload during local testing
+                console.info('Contact form data:', data);
+
+                setStatus('Message sent. Thanks!', 'ok');
+                form.reset();
+            } catch (err) {
+                console.error(err);
+                setStatus('Failed to send. Please try again later.', 'err');
+            } finally {
+                submitBtn.removeAttribute('aria-busy');
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>

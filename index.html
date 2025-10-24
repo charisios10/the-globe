@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Globe - Web Blog</title>
+    <meta name="description"
+        content="The Globe is a web blog about travel, culture, and ideas — articles, guides, and stories from around the world." />
+    <link rel="icon" href="favicon.ico" />
+    <style>
+        :root {
+            --max-width: 1000px;
+            --accent: #0b5cff;
+            --muted: #6b7280
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+            padding: 0;
+            margin: 0;
+            color: #111;
+            background: #f4f6fb
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 1rem
+        }
+
+        header {
+            background: #fff;
+            border-bottom: 1px solid #e6e9ef
+        }
+
+        .site-brand {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            padding: .75rem 1rem
+        }
+
+        .site-brand h1 {
+            font-size: 1.125rem;
+            margin: 0
+        }
+
+        nav {
+            margin-left: auto
+        }
+
+        nav a {
+            color: var(--muted);
+            text-decoration: none;
+            margin-left: 1rem;
+            font-size: .95rem
+        }
+
+        .hero {
+            background: #fff;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(16, 24, 40, .04)
+        }
+
+        .hero p {
+            color: var(--muted);
+            margin: .5rem 0 0
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 1rem;
+            margin-top: 1rem
+        }
+
+        .posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem
+        }
+
+        article.card {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(16, 24, 40, .04)
+        }
+
+        article.card h2 {
+            margin: .25rem 0
+        }
+
+        .meta {
+            font-size: .85rem;
+            color: var(--muted)
+        }
+
+        aside.widget {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            height: fit-content
+        }
+
+        footer {
+            margin-top: 1.5rem;
+            padding: 1rem 0;
+            color: var(--muted);
+            text-align: center
+        }
+
+        @media (max-width:900px) {
+            .layout {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container site-brand" role="banner">
+            <a href="/" aria-label="The Globe home" style="text-decoration:none;color:inherit">
+                <h1>The Globe</h1>
+            </a>
+            <nav role="navigation" aria-label="Main navigation">
+                <a href="/about.html">About</a>
+                <a href="/categories.html">Categories</a>
+                <a href="/contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container" role="main">
+        <section class="hero" aria-labelledby="hero-title">
+            <h2 id="hero-title">Welcome to The Globe</h2>
+            <p>Stories, guides, and personal essays about travel, culture, and ideas. Start here or browse recent posts
+                below.</p>
+        </section>
+
+        <div class="layout" role="region" aria-label="Content">
+            <section>
+                <h3 style="margin:1rem 0 0">Recent posts</h3>
+                <div class="posts" aria-live="polite">
+                    <article class="card" aria-labelledby="post-1-title">
+                        <h2 id="post-1-title">Exploring Lisbon: A Short Guide</h2>
+                        <p class="meta">Sep 5, 2025 • Travel</p>
+                        <p>Compact tips for first-time visitors: what to see, where to eat, and how to move around the
+                            city.</p>
+                        <p><a href="/posts/lisbon.html" style="color:var(--accent)">Read more →</a></p>
+                    </article>
+
+                    <article class="card" aria-labelledby="post-2-title">
+                        <h2 id="post-2-title">How to Pack Light for Two Weeks</h2>
+                        <p class="meta">Aug 20, 2025 • Tips</p>
+                        <p>Essentials-only packing list and a few tricks to keep baggage light and flexible.</p>
+                        <p><a href="/posts/pack-light.html" style="color:var(--accent)">Read more →</a></p>
+                    </article>
+
+                    <!-- Add more article cards as needed -->
+                </div>
+            </section>
+
+            <aside class="widget" role="complementary" aria-label="Sidebar">
+                <h4 style="margin-top:0">Subscribe</h4>
+                <form action="/subscribe" method="post">
+                    <label for="email" style="display:block;font-size:.9rem;margin-bottom:.25rem">Email</label>
+                    <input id="email" name="email" type="email" placeholder="you@example.com" required
+                        style="width:100%;padding:.5rem;margin-bottom:.5rem;border:1px solid #dfe6f0;border-radius:6px">
+                    <button type="submit"
+                        style="width:100%;padding:.5rem;background:var(--accent);color:#fff;border:0;border-radius:6px">Subscribe</button>
+                </form>
+
+                <hr style="margin:1rem 0;border:none;border-top:1px solid #eef2ff">
+                <nav aria-label="Quick links">
+                    <a href="/tags.html"
+                        style="display:block;color:var(--muted);text-decoration:none;margin-bottom:.5rem">Tags</a>
+                    <a href="/archive.html" style="display:block;color:var(--muted);text-decoration:none">Archive</a>
+                </nav>
+            </aside>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <small>© <span id="year"></span> The Globe — All rights reserved.</small>
+        </div>
+    </footer>
+
+    <script>
+        // small helpers for the starter template
+        document.getElementById('year').textContent = new Date().getFullYear();
+        // Add simple keyboard accessible focus styles
+        document.addEventListener('keydown', function (e) { if (e.key === 'Tab') document.documentElement.classList.add('show-focus'); }, { once: true });
+    </script>
+</body>
+
+</html>
